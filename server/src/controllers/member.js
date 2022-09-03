@@ -1,37 +1,37 @@
-const {member}= require(`../../models`);
+const { member } = require(`../../models`);
 
-exports.addMember = async(req,res)=>{
+exports.addMember = async (req, res) => {
     try {
         const data = req.body
 
         const createdData = await member.create(data)
 
         res.send({
-            status:"success",
-            data:{
+            status: "success",
+            data: {
                 createdData
-                }
+            }
         })
     } catch (error) {
         console.log(error)
         res.send({
-            status:"error",
+            status: "error",
             message: error.message
         })
     }
 }
 
-exports.getMembers = async(req,res)=>{
+exports.getMembers = async (req, res) => {
     try {
         let data = await member.findAll({
-            attributes:{
-                exclude:['createdAt','updatedAt']
+            attributes: {
+                exclude: ['createdAt', 'updatedAt']
             }
         })
         res.send({
-            status:"success",
-            data:{
-                    data
+            status: "success",
+            data: {
+                data
             }
         })
     } catch (error) {
@@ -43,33 +43,33 @@ exports.getMembers = async(req,res)=>{
     }
 }
 
-exports.getMember = async(req,res)=>{
+exports.getMember = async (req, res) => {
     try {
-        const {id} = req.params
+        const { id } = req.params
 
         const datamember = await member.findOne({
-            where:{
-                id:id
+            where: {
+                id: id
             },
-            attributes:{
-                exclude:['password','createdAt','updatedAt']
+            attributes: {
+                exclude: ['password', 'createdAt', 'updatedAt']
             }
         })
         res.send({
-            status:"success",
-            data:{
+            status: "success",
+            data: {
                 datamember
             }
         })
     } catch (error) {
         res.send({
-            status:"error",
-            message:"server error"
+            status: "error",
+            message: "server error"
         })
     }
 }
 
-exports.updateMember = async(req, res) => {
+exports.updateMember = async (req, res) => {
     try {
         const id = req.params.id
         const newData = req.body
@@ -88,28 +88,28 @@ exports.updateMember = async(req, res) => {
     } catch (error) {
         console.log(error)
         res.send({
-            status:"error",
+            status: "error",
             message: error.message
         })
     }
 }
 
-exports.deleteMember = async(req,res)=>{
+exports.deleteMember = async (req, res) => {
     try {
-        const {id} = req.params
+        const { id } = req.params
 
         await member.destroy({
-            where:{
+            where: {
                 id
             }
         })
         res.send({
-            status:'success',
-            message:`Delete user id:${id} finished`
+            status: 'success',
+            message: `Delete user id:${id} finished`
         })
     } catch (error) {
         res.send({
-            status:"error",
+            status: "error",
             message: error.message
         })
     }
